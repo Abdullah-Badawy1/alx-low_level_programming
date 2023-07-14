@@ -2,7 +2,11 @@
 #include <stdio.h>
 #include <time.h>
 
-/* betty style doc for function main goes there */
+/**
+ * main - entry point 
+ * Description: positive and negative
+ * Return: 0 (success) 
+*/
 
 int main(void)
 {
