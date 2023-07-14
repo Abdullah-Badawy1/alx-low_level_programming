@@ -3,11 +3,12 @@
 #include <time.h>
 
 /**
- * main - entry point 
- * Description: positive and negative
- * Return: 0 (success) 
-*/
-
+ * main - Entry point
+ *
+ * Description: Positive and negative
+ *
+ * Return: 0 (success)
+ */
 int main(void)
 {
 	int n;
@@ -15,7 +16,7 @@ int main(void)
 	srand(time(0));
 	n = rand() - RAND_MAX / 2;
 
-	printf("%d is ", n);
+	printf("%i is ", n);
 	if (n > 0)
 		printf("positive\n");
 	else if (n == 0)
