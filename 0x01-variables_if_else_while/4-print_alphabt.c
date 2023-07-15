@@ -3,19 +3,19 @@
 /**
  * main - Entry point
  *
- * Description: Prints the alphabet in lowercase excluding 'q' and 'e' using putchar and a while loop
+ * Description: Prints the alphabet in lowercase excluding the letters q and e
  *
  * Return: 0 (Success)
  */
 int main(void)
 {
-	char letter = 'a';
+	char letter;
 
+	letter = 'a';
 	while (letter <= 'z')
 	{
 		if (letter != 'q' && letter != 'e')
 			putchar(letter);
-
 		letter++;
 	}
 
