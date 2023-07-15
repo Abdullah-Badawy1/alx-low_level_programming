@@ -3,31 +3,32 @@
 /**
  * main - Entry point
  *
- * Description: Prints all possible different combinations of three digits
- * Numbers must be separated by ', ' followed by a space
- * The three digits must be different
- * 012, 120, 102, 021, 201, 210 are considered the same combination of the three digits 0, 1 and 2
- * Print only the smallest combination of three digits
- * Numbers should be printed in ascending order, with three digits
+ * Description: Prints all possible combinations of two two-digit numbers
+ * Numbers range from 0 to 99
+ * The two numbers are separated by a space
+ * All numbers are printed with two digits (e.g., 01, 09)
+ * Combinations of numbers are separated by comma, followed by a space
+ * Combinations of numbers are printed in ascending order
  *
  * Return: 0 (Success)
  */
 int main(void)
 {
-	int digit1, digit2, digit3;
-	int separator = 0;
+	int num1, num2;
 
-	for (digit1 = 0; digit1 <= 9; digit1++)
+	for (num1 = 0; num1 < 100; num1++)
 	{
-		for (digit2 = digit1 + 1; digit2 <= 9; digit2++)
+		for (num2 = num1; num2 < 100; num2++)
 		{
-			for (digit3 = digit2 + 1; digit3 <= 9; digit3++)
+			if (num1 != num2)
 			{
-				putchar(digit1 + '0');
-				putchar(digit2 + '0');
-				putchar(digit3 + '0');
+				putchar((num1 / 10) + '0');
+				putchar((num1 % 10) + '0');
+				putchar(' ');
+				putchar((num2 / 10) + '0');
+				putchar((num2 % 10) + '0');
 
-				if (digit1 != 7 || digit2 != 8 || digit3 != 9)
+				if (num1 != 98 || num2 != 99)
 				{
 					putchar(',');
 					putchar(' ');
