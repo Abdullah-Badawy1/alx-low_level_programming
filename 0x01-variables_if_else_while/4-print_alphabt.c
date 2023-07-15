@@ -5,7 +5,7 @@
  *
  * Description: Prints the lowercase alphabet excluding 'q' and 'e' using putchar
  *
- * Return: (0) - Success
+ * Return: 0 (Success)
  */
 int main(void)
 {
@@ -14,7 +14,9 @@ int main(void)
 	for (letter = 'a'; letter <= 'z'; letter++)
 	{
 		if (letter != 'q' && letter != 'e')
+		{
 			putchar(letter);
+		}
 	}
 
 	putchar('\n');
