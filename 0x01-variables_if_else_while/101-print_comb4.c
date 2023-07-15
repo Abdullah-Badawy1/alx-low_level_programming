@@ -15,10 +15,11 @@
 int main(void)
 {
 	int digit1, digit2, digit3;
+	int separator = 0;
 
-	for (digit1 = 0; digit1 <= 7; digit1++)
+	for (digit1 = 0; digit1 <= 9; digit1++)
 	{
-		for (digit2 = digit1 + 1; digit2 <= 8; digit2++)
+		for (digit2 = digit1 + 1; digit2 <= 9; digit2++)
 		{
 			for (digit3 = digit2 + 1; digit3 <= 9; digit3++)
 			{
