@@ -1,2 +1,4 @@
 #!/bin/bash
-CFILE="main.c"; BASENAME=$(echo "$CFILE" | cut -d. -f1); gcc -c "$CFILE" -o "$BASENAME.o"
+CFILE="main.c"
+OUTPUT_FILE="${CFILE%.c}.o"
+gcc -c "$CFILE" -o "$OUTPUT_FILE"
