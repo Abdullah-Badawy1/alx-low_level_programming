@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * main - Entry point
+ * print_alphabet - Entry point
  *
  * Description: a program  with
- * print ALPHABET  functionthat prints _putchar, followed by a new line.
+ * print_alphabet  functionthat prints _putchar, followed by a new line.
  *
  * Return: 0 (success)
  */
