@@ -1,22 +1,25 @@
 #include "main.h"
 
 /**
- * print_alphabet_x10 - Entry point
- *
- * Description: a program  with
- * alphabet loop functionthat prints _putchar, followed by a new line.
- *
- * Return: 0 (success)
+ * print_alphabet_x10 - Entry point 
  */
+
 void print_alphabet_x10(void)
 {
+	char chae1;
+	int w;
 
-	for (int i = 0 ; i < 10 ; i++)
+	w = 0;
+
+	while (w < 10)
 	{
-		for (char ch = 'a' ; ch <= 'z' ; ch++)
+		chae1 = 'a';
+		while (chae1 <= 'z')
 		{
-			_putchar(ch);
+			_putchar(chae1);
+			chae1++;
 		}
 		_putchar('\n');
+		w++;
 	}
 }
