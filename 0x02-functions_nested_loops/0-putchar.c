@@ -1,8 +1,12 @@
+#include <stdio.h>
 #include "main.h"
-
 /**
- * main -  prints _putchar, followed by a new line
- * Return: Always 0 (Success)
+ * main - Entry point
+ *
+ * Description: a program  with
+ * areturn functionthat prints _putchar, followed by a new line.
+ *
+ * Return: 0 (success)
  */
 int main(void)
 {
