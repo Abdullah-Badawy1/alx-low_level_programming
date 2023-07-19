@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_alphabet_x10 - Entry point 
+ *print_alphabet_x10 - Entry point
  */
 
 void print_alphabet_x10(void)
@@ -10,7 +10,6 @@ void print_alphabet_x10(void)
 	int w;
 
 	w = 0;
-
 	while (w < 10)
 	{
 		chae1 = 'a';
