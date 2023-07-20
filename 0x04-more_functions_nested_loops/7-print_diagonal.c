@@ -1,27 +1,26 @@
 #include "main.h"
-
 /**
  * print_diagonal - Draws a diagonal pattern using the character '$'.
  * @n: The number of times the character '$' should be printed on each line.
  */
+
 void print_diagonal(int n)
 {
-	if (n <= 0)
-	{
-		_putchar('\n');
-	}
-	else
-	{
-		int i, j;
+int len, space;
 
-		for (i = 0; i < n; i++)
-		{
-			for (j = 0; j < i; j++)
-			{
-				_putchar(' ');
-			}
-			_putchar('$');
-			_putchar('\n');
-		}
-	}
+if (n > 0)
+{
+for (len = 0; len < n; len++)
+{
+for (space = 0; space < len; space++)
+_putchar(' ');
+
+_putchar('\\');
+
+if (len == (n - 1))
+continue;
+_putchar('\n');
+}
+}
+_putchar('\n');
 }
