@@ -1,3 +1,7 @@
+/*
+ * File: 0-memset.c
+ * Auth: not
+ */
 #include "main.h"
 
 /**
