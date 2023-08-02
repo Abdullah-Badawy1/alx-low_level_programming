@@ -15,7 +15,7 @@
  */
 int is_prime_number(int prime)
 {
-	switch (prime)
+	switch (prime)i
 	{
 	case 0:
 	case 1:
