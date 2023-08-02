@@ -10,13 +10,16 @@
  * @s: Pointer to the input string to be printed.
  */
 void _puts_recursion(char *s)
-
+{
 	if (*s == '\0')
 	{
 		_putchar('\n');
 	}
+	else
+	{
 
 	_putchar(*s);
 	s = s+1;
 	_puts_recursion(s);
+	}
 }
