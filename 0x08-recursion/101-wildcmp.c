@@ -1,49 +1,107 @@
 #include "main.h"
 
 /**
- * wildcmp - Compares two strings and returns 1 if
- * they can be considered identical,
- *           otherwise returns 0.
+ * strlen_no_wilds - Returns the length of a string,
+ * ignoring wildcard characters.
+ * @str: The string to be measured.
  *
- * This function compares two strings,
- * 's1' and 's2', with the possibility of
- * the 's2' string containing the wildcard character
- * '*'. The function recursively
- * compares characters from both strings and handles
- * the wildcard condition using
- * switch conditions. If the strings can be considered
- * identical, the function
- * returns 1; otherwise, it returns 0.
+ * Return: The length.
+ */
+int strlen_no_wilds(char *str)
+{
+	int len = 0, index = 0;
+
+	if (*(str + index))
+	{
+		if (*str != '*')
+			len++;
+
+		index++;
+		len += strlen_no_wilds(str + index);
+	}
+
+	return (len);
+}
+
+/**
+ * iterate_wild - Iterates through a string located at a wildcard
+ *                until it points to a non-wildcard character.
+ * @wildstr: The string to be iterated through.
+ */
+void iterate_wild(char **wildstr)
+{
+	switch (**wildstr)
+	{
+		case '*':
+			(*wildstr)++;
+			iterate_wild(wildstr);
+			break;
+
+		default:
+			break;
+	}
+}
+
+/**
+ * postfix_match - Checks if a string str matches the postfix of
+ *                 another string potentially containing wildcards.
+ * @str: The string to be matched.
+ * @postfix: The postfix.
  *
- * @s1: The first string to compare.
- * @s2: The second string that may contain the wildcard character '*'.
+ * Return: If str and postfix are identical - a pointer to the null byte
+ *         located at the end of postfix.
+ *         Otherwise - a pointer to the first unmatched character in postfix.
+ */
+char *postfix_match(char *str, char *postfix)
+{
+	int str_len = strlen_no_wilds(str) - 1;
+	int postfix_len = strlen_no_wilds(postfix) - 1;
+
+	switch (*postfix)
+	{
+		case '*':
+			iterate_wild(&postfix);
+			break;
+
+		default:
+			break;
+	}
+
+	if (*(str + str_len - postfix_len) == *postfix && *postfix != '\0')
+	{
+		postfix++;
+		return (postfix_match(str, postfix));
+	}
+
+	return (postfix);
+}
+
+/**
+ * wildcmp - Compares two strings, considering wildcard characters.
+ * @s1: The first string to be compared.
+ * @s2: The second string to be compared - may contain wildcards.
  *
- * Return: 1 if the strings are considered identical, 0 otherwise.
+ * Return: If the strings can be considered identical - 1.
+ *         Otherwise - 0.
  */
 int wildcmp(char *s1, char *s2)
 {
-	switch (*s1)
+	switch (*s2)
 	{
-		case '\0': /* Both strings are at the end, considered identical */
-			if (*s2 == '\0')
-				return (1);
-			else if (*s2 == '*' && *(s2 + 1) != '\0')
-				return (wildcmp(s1, s2 + 1));
-			return (0);
+		case '*':
+			iterate_wild(&s2);
+			s2 = postfix_match(s1, s2);
+			break;
 
-		default: /* Compare characters */
-			if (*s1 == *s2)
-				return (wildcmp(s1 + 1, s2 + 1));
-
-			switch (*s2)
-			{
-				case '*': /* Handle the wildcard '*' */
-					if (*(s2 + 1) != '\0')
-						return (wildcmp(s1, s2 + 1) || wildcmp(s1 + 1, s2));
-					return (0);
-
-				default: /* Characters don't match */
-					return (0);
-			}
+		default:
+			break;
 	}
+
+	if (*s2 == '\0')
+		return (1);
+
+	if (*s1 != *s2)
+		return (0);
+
+	return (wildcmp(++s1, ++s2));
 }
