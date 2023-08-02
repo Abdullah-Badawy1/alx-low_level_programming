@@ -1,53 +1,35 @@
 #include "main.h"
-
 /**
- * my_sqrt_recursion - Recursive function to find the square root of a number.
+ * is_prime_number - Checks if a given integer is a prime number.
  *
- * This function is a helper function
- * used by '_sqrt_recursion' to recursively
- * find the square root of a given number 'a'.
- * It compares the square of 'b'
- * with 'a' and returns 'b' when the square of
- * 'b' is equal to 'a'. If the square
- * of 'b' exceeds 'a', the function
- * returns -1, indicating that 'a' doesn't have
- * a perfect square root. Otherwise, it increments 'b' and recursively calls
- * itself to continue the search for the square root.
+ * This function takes an integer 'prime' as input and determines whether it
+ * is a prime number. If 'prime' is less than or equal to 1, the function
+ * returns 0. If 'prime' is equal to 2, the function returns 1 as 2 is a prime
+ * number. For other numbers, the function uses switch conditions to check if
+ * 'prime' is divisible by 2, 3, or 5. If 'prime' is divisible by any of these
+ * numbers, it means it has divisors other than 1 and itself, so the function
+ * returns 0 to indicate that 'prime' is not a prime number. Otherwise, the
+ * function returns 1, indicating that 'prime' is a prime number.
  *
- * @a: The number for which the square root is being searched.
- * @b: The current value to be squared and compared to 'a'.
+ * @prime: The number to be checked for primality.
  *
- * Return: The square root of 'a' if it exists, or -1 if it doesn't have a
- *         perfect square root.
+ * Return: 1 if the input integer is a prime number, otherwise return 0.
  */
-int my_sqrt_recursion(int a, int b)
+int is_prime_number(int prime)
 {
-	if (a == (b * b))
-		return (b);
-	else if ((b * b) >= a)
-		return (-1);
-	else
-		return (my_sqrt_recursion(a, b + 1));
-}
-
-/**
- * _sqrt_recursion - Calculates the square root of a non-negative number.
- *
- * This function takes an integer 'n' as input and calculates the square root
- * of 'n' using a recursive helper function 'my_sqrt_recursion'. If 'n' is less
- * than or equal to 0, the function returns -1 to indicate an error. Otherwise,
- * it calls the 'my_sqrt_recursion' function with 'n' and an initial value of 0
- * for 'b' to find the square root.
- *
- * @n: The non-negative number for which the square root is to be calculated.
- *
- * Return: The square root of 'n'
- * if it exists, or -1 if 'n' is negative or
- *         doesn't have a perfect square root.
- */
-int _sqrt_recursion(int n)
-{
-	if (n <= 0)
-		return (-1);
-	return (my_sqrt_recursion(n, 0));
+	switch (prime)
+	{
+		case 0:
+		case 1:
+			return (0);
+		case 2:
+			return (1);
+		default:
+			if (prime % 2 == 0 || prime % 3 == 0 || prime % 5 == 0)
+				return (0);
+			else if (prime % 9 == 0 || prime % 7 == 0)
+				return (0);
+			else
+				return (1);
+	}
 }
