@@ -19,7 +19,11 @@ void _puts_recursion(char *s)
 	{
 
 	_putchar(*s);
+<<<<<<< HEAD
 	s = s+1;
 	_puts_recursion(s);
 	}
+=======
+	_puts_recursion(s + 1);
+>>>>>>> 83c85810a1a887fb860b550a7767f7facca5eccd
 }
