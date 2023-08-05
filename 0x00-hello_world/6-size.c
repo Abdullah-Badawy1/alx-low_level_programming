@@ -5,8 +5,8 @@
  *
  * Description: A C program that prints the sizes of different data types
  *
- * Return: Always 0 (Success)
-*/
+ * Return: Always 0 Success
+ */
 int main(void)
 {
 	printf("Size of a char: %ld byte(s)\n", sizeof(char));
