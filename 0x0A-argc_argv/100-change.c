@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 /**
- * main - Prints minimum number of coins to make change for an amount of money.
- * @argc: Number of arguments.
- * @argv: Array with the arguments.
+ * main - prints minimum number coins to make change for an amount of money.
+ * @argc: number of arguments
+ * @argv: array with the arguments
  *
- * Return: Always returns 0.
+ * Return: always 0
  **/
 
 int main(int argc, char *argv[])
@@ -19,42 +19,29 @@ int main(int argc, char *argv[])
 		printf("%s\n", c);
 		return (1);
 	}
-
 	dev = atoi(argv[1]);
-
 	while (dev >= 25)
 	{
 		dev -= 25;
 		coins++;
 	}
-
 	while (dev >= 10)
 	{
 		dev -= 10;
 		coins++;
 	}
-
 	while (dev >= 5)
 	{
 		dev -= 5;
 		coins++;
 	}
-
 	while (dev >= 2)
 	{
 		dev -= 2;
 		coins++;
 	}
-
-	switch (dev)
-	{
-		case 1:
-			coins++;
-			break;
-		default:
-			break;
-	}
-
+	if (dev == 1)
+		coins++;
 	printf("%d\n", coins);
 	return (0);
 }
