@@ -1,74 +1,47 @@
 #include "main.h"
 
 /**
- * handleNullStrings - Handles NULL strings by assigning an empty string.
- * @s: Pointer to the string
- */
-static void handleNullStrings(char **s)
-{
-	if (*s == NULL)
-		*s = "";
-}
-
-/**
- * calculateStringLength - Calculates the length of concatenated strings.
- * @s1: First string
- * @s2: Second string
- * Return: Length of concatenated strings
- */
-static int calculateStringLength(char *s1, char *s2)
-{
-	int len = 0;
-
-	while (*s1 || *s2)
-	{
-		len++;
-		s1++;
-		s2++;
-	}
-	return (len);
-}
-
-/**
- * copyString - Copies a source string to a destination and updates index.
- * @source: Source string
- * @destination: Destination string
- * @index: Pointer to index tracking destination position
- */
-static void copyString(char *source, char *destination, int *index)
-{
-	while (*source)
-	{
-		destination[*index] = *source;
-		(*index)++;
-		source++;
-	}
-}
-
-/**
  * str_concat - Concatenates two strings.
  * @s1: First string
  * @s2: Second string
- * Return: NULL on failure, otherwise pointer to a new concatenated string.
+ *
+ * Return: Pointer to a new string on success, NULL on failure.
  */
 char *str_concat(char *s1, char *s2)
 {
 	char *concat_str;
-	int concat_index = 0, len;
+	int index = 0, concat_index = 0, len = 0;
 
-	handleNullStrings(&s1);
-	handleNullStrings(&s2);
+	if (s1 == NULL)
+		s1 = "";
 
-	len = calculateStringLength(s1, s2);
+	if (s2 == NULL)
+		s2 = "";
 
-	concat_str = malloc(sizeof(char) * (len + 1));
+	while (s1[index] || s2[index])
+	{
+		len++;
+		index++;
+	}
+
+	concat_str = malloc(sizeof(char) * len);
 
 	if (concat_str == NULL)
 		return (NULL);
 
-	copyString(s1, concat_str, &concat_index);
-	copyString(s2, concat_str, &concat_index);
-	concat_str[concat_index] = '\0';
+	index = 0;
+	while (s1[index])
+	{
+		concat_str[concat_index++] = s1[index];
+		index++;
+	}
+
+	index = 0;
+	while (s2[index])
+	{
+		concat_str[concat_index++] = s2[index];
+		index++;
+	}
 
 	return (concat_str);
 }
