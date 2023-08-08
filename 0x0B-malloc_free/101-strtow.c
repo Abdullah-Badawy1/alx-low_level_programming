@@ -2,69 +2,66 @@
 #include <stdlib.h>
 
 /**
- * Splits string into word array.
- * @str: Input string.
- * @height: Pointer for array height.
+ * ch_free_grid - frees a 2 dimensional array.
+ * @grid: multidimensional array of char.
+ * @height: height of the array.
+ *
+ * Return: no return
  */
-char **split_string(char *str, unsigned int *height)
+void ch_free_grid(char **grid, unsigned int height)
 {
-	unsigned int c, i, j, word_start;
-
-	for (c = *height = 0; str[c] != '\0'; c++)
-	{
-		if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
-			(*height)++;
-	}
-
-	char **word_array = malloc((*height + 1) * sizeof(char *));
-
-	if (word_array == NULL || *height == 0)
-		return (NULL);
-
-	for (i = word_start = 0; i < *height; i++)
-	{
-
-		for (j = 0; word_start <= c; word_start++, j++)
-			word_array[i][j] = str[word_start];
-		word_array[i][j] = '\0';
-	}
-
-	word_array[i] = NULL;
-	return (word_array);
-}
-
-/**
- * Frees memory for word array.
- * @word_array: Array of words.
- * @height: Height of array.
- */
-void free_word_array(char **word_array, unsigned int height)
-{
-	if (word_array != NULL && height != 0)
+	if (grid != NULL && height != 0)
 	{
 		for (; height > 0; height--)
-			free(word_array[height]);
-		free(word_array[height]);
-		free(word_array);
+			free(grid[height]);
+		free(grid[height]);
+		free(grid);
 	}
 }
 
 /**
- * Entry point to split string into word array.
- * @str: Input string.
- * Return: Pointer to word array, NULL on failure.
+ * strtow - splits a string into words.
+ * @str: string.
+ *
+ * Return: pointer of an array of integers
  */
 char **strtow(char *str)
 {
+	char **aout;
+	unsigned int c, height, i, j, a1;
+
 	if (str == NULL || *str == '\0')
 		return (NULL);
-
-	unsigned int height;
-
-	char **word_array = split_string(str, &height);
-
-	if (word_array == NULL || height == 0)
+	for (c = height = 0; str[c] != '\0'; c++)
+		if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
+			height++;
+	aout = malloc((height + 1) * sizeof(char *));
+	if (aout == NULL || height == 0)
+	{
+		free(aout);
 		return (NULL);
-
-	return (word_array);
+	}
+	for (i = a1 = 0; i < height; i++)
+	{
+		for (c = a1; str[c] != '\0'; c++)
+		{
+			if (str[c] == ' ')
+				a1++;
+			if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
+			{
+				aout[i] = malloc((c - a1 + 2) * sizeof(char));
+				if (aout[i] == NULL)
+				{
+					ch_free_grid(aout, i);
+					return (NULL);
+				}
+				break;
+			}
+		}
+		for (j = 0; a1 <= c; a1++, j++)
+			aout[i][j] = str[a1];
+		aout[i][j] = '\0';
+	}
+	aout[i] = NULL;
+	return (aout);
 }
