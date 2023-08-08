@@ -1,101 +1,70 @@
 #include "main.h"
+#include <stdlib.h>
 
 /**
-*strtow - splits a stirng into words
-*@str: string to be splitted
-*
-*Return: pointer to the array of splitted words
-*/
+ * Splits string into word array.
+ * @str: Input string.
+ * @height: Pointer for array height.
+ */
+char **split_string(char *str, unsigned int *height)
+{
+	unsigned int c, i, j, word_start;
 
+	for (c = *height = 0; str[c] != '\0'; c++)
+	{
+		if (str[c] != ' ' && (str[c + 1] == ' ' || str[c + 1] == '\0'))
+			(*height)++;
+	}
+
+	char **word_array = malloc((*height + 1) * sizeof(char *));
+
+	if (word_array == NULL || *height == 0)
+		return (NULL);
+
+	for (i = word_start = 0; i < *height; i++)
+	{
+
+		for (j = 0; word_start <= c; word_start++, j++)
+			word_array[i][j] = str[word_start];
+		word_array[i][j] = '\0';
+	}
+
+	word_array[i] = NULL;
+	return (word_array);
+}
+
+/**
+ * Frees memory for word array.
+ * @word_array: Array of words.
+ * @height: Height of array.
+ */
+void free_word_array(char **word_array, unsigned int height)
+{
+	if (word_array != NULL && height != 0)
+	{
+		for (; height > 0; height--)
+			free(word_array[height]);
+		free(word_array[height]);
+		free(word_array);
+	}
+}
+
+/**
+ * Entry point to split string into word array.
+ * @str: Input string.
+ * Return: Pointer to word array, NULL on failure.
+ */
 char **strtow(char *str)
 {
-char **split;
-int i, j = 0, temp = 0, size = 0, words = num_words(str);
+	if (str == NULL || *str == '\0')
+		return (NULL);
 
-if (words == 0)
-return (NULL);
-split = (char **) malloc(sizeof(char *) * (words + 1));
-if (split != NULL)
-{
-for (i = 0; i <= len(str) && words; i++)
-{
-if ((str[i] != ' ') && (str[i] != '\0'))
-size++;
-else if (((str[i] == ' ') || (str[i] == '\0')) && i && (str[i - 1] != ' '))
-{
-split[j] = (char *) malloc(sizeof(char) * size + 1);
-if (split[j] != NULL)
-{
-while (temp < size)
-{
-split[j][temp] = str[(i - size) +temp];
-temp++;
-}
-split[j][temp] = '\0';
-size = temp = 0;
-j++;
-}
-else
-{
-while (j-- >= 0)
-free(split[j]);
-free(split);
-return (NULL);
-}
-}
-}
-split[words] = NULL;
-return (split);
-}
-else
-return (NULL);
-}
+	unsigned int height;
 
+	char **word_array = split_string(str, &height);
 
-/**
-* num_words - counts the number of words in str
-*@str: string to be used
-*
-*Return: number of words
-*/
-int num_words(char *str)
-{
-int i = 0, words = 0;
+	if (word_array == NULL || height == 0)
+		return (NULL);
 
-while (i <= len(str))
-{
-if ((str[i] != ' ') && (str[i] != '\0'))
-{
-i++;
+	return (word_array);
 }
-else if (((str[i] == ' ') || (str[i] == '\0')) && i && (str[i - 1] != ' '))
-{
-words += 1;
-i++;
-}
-else
-{
-i++;
-}
-}
-return (words);
-}
-
-/**
-* len - returns length of str
-*@str: string to be counted
-*
-* Return: length of the string
-*/
-
-int len(char *str)
-{
-int len = 0;
-
-if (str != NULL)
-{
-while (str[len])
-len++;
-}
-return (len);
-
