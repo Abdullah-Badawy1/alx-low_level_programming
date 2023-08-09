@@ -15,7 +15,6 @@
 int main(void)
 {
 	int num1, num2;
-	int separator = 0;
 
 	for (num1 = 0; num1 <= 98; num1++)
 	{
