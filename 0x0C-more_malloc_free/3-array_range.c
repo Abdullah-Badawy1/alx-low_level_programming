@@ -1,34 +1,35 @@
 #include "main.h"
 
 /**
- * custom_array_range - Creates an array of integers within a specified range.
- * @minimum: The smallest number in the array.
- * @maximum: The largest value in the array.
+ * array_range - Creates an array of integers between min and max (inclusive).
+ * @min: Smallest number in the array.
+ * @max: Largest value in the array.
  *
- * Return: If successful, returns a pointer to the allocated memory block.
- *         If memory allocation fails or min > max, returns NULL.
+ * Return: Pointer to the address of the memory block containing the array.
  */
-int *custom_array_range(int minimum, int maximum)
+int *array_range(int min, int max)
 {
-	int *integer_array;
-	int i, index = 0;
+	int *block;
+	int i, j = 0;
 
-	if (minimum > maximum)
-		return (NULL);
-
-	integer_array = malloc(sizeof(*integer_array) * ((maximum - minimum) + 1));
-
-	if (integer_array != NULL)
+	switch (min > max)
 	{
-		for (i = minimum; i <= maximum; i++)
-		{
-			integer_array[index] = i;
-			index++;
-		}
-		return (integer_array);
-	}
-	else
-	{
-		return (NULL);
+		case 1:
+			return (NULL);
+
+		default:
+			block = malloc(sizeof(*block) * ((max - min) + 1));
+
+			if (block != NULL)
+			{
+				for (i = min; i <= max; i++)
+				{
+					block[j] = i;
+					j++;
+				}
+				return (block);
+			}
+			else
+				return (NULL);
 	}
 }
