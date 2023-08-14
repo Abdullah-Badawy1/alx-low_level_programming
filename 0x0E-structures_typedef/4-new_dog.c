@@ -37,7 +37,6 @@ dog_t *new_dog(char *name, float age, char *owner)
 		free(new_dog);
 		return (NULL);
 	}
-
 	i = 0;
 	while (name[i])
 	{
@@ -45,9 +44,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 		i++;
 	}
 	new_dog->name[i] = '\0';
-
 	new_dog->age = age;
-
 	i = 0;
 	while (owner[i])
 	{
@@ -55,6 +52,5 @@ dog_t *new_dog(char *name, float age, char *owner)
 		i++;
 	}
 	new_dog->owner[i] = '\0';
-
 	return (new_dog);
 }
