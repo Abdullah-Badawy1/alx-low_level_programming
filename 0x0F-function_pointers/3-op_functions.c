@@ -1,5 +1,4 @@
-#ifndef _3_CALC_H_
-#define _3_CALC_H_
+#include "3-calc.h"
 
 /**
  * op_add - Returns the sum of two numbers.
@@ -56,4 +55,3 @@ int op_mod(int a, int b);
 {
 return (a % b);
 }
-#endif /* _3_CALC_H_ */
