@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include "variadic_functions.h"
 #include <stdbool.h>
 
@@ -12,23 +12,27 @@ void print_all(const char * const format, ...)
 {
 	va_list vl;
 	char *string;
-	int i;
+	int i = 0;
+	bool separator = false;
 
-	i = 0;
 	va_start(vl, format);
 	while (format != NULL && format[i] != '\0')
 	{
-		if (format[i] == 'i')
+		if (separator)
+			printf(", ");
+		separator = true;
+
+		if (format[i] == 'c')
 		{
-			printf("%i", va_arg(vl, int));
+			printf("%c", va_arg(vl, int));
+		}
+		else if (format[i] == 'i')
+		{
+			printf("%d", va_arg(vl, int));
 		}
 		else if (format[i] == 'f')
 		{
-			printf("%f", va_arg(vl, double));
-		}
-		else if (format[i] == 'c')
-		{
-			printf("%c", (char) va_arg(vl, int));
+			printf("%f", (float) va_arg(vl, double));
 		}
 		else if (format[i] == 's')
 		{
@@ -42,9 +46,6 @@ void print_all(const char * const format, ...)
 				printf("%s", string);
 			}
 		}
-		if ((format[i] == 'c' || format[i] == 'i' || format[i] == 'f' ||
-		format[i] == 's') && format[(i + 1)] != '\0')
-			printf(", ");
 		i++;
 	}
 	printf("\n");
