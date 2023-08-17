@@ -2,16 +2,11 @@
 #include <stdarg.h>
 #include "variadic_functions.h"
 #include <stdbool.h>
-
 /**
- * print_all - Prints values based on the provided format.
+ * print_all - Function that prints anything
  *
- * @format: The format specifying the types of values to print.
- *          'c': char
- *          'i': integer
- *          'f': float
- *          's': char * (if the string is NULL, print (nil) instead)
- *          Any other char is ignored.
+ * @format: This is the format to print a value
+ *
  */
 void print_all(const char * const format, ...)
 {
@@ -19,8 +14,9 @@ void print_all(const char * const format, ...)
 	char *string;
 	int i;
 
+	i = 0;
 	va_start(vl, format);
-	for (i = 0; format != NULL && format[i] != '\0'; i++)
+	while (format != NULL && format[i] != '\0')
 	{
 		switch (format[i])
 		{
@@ -44,10 +40,9 @@ void print_all(const char * const format, ...)
 				break;
 		}
 		if ((format[i] == 'c' || format[i] == 'i' || format[i] == 'f' ||
-			format[i] == 's') && format[(i + 1)] != '\0')
-		{
+		format[i] == 's') && format[(i + 1)] != '\0')
 			printf(", ");
-		}
+		i++;
 	}
 	printf("\n");
 	va_end(vl);
