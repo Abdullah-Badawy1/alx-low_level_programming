@@ -1,5 +1,5 @@
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include "variadic_functions.h"
 #include <stdbool.h>
 
@@ -7,46 +7,47 @@
  * print_all - Prints values based on the provided format.
  *
  * @format: The format specifying the types of values to print.
+ *          'c': char
+ *          'i': integer
+ *          'f': float
+ *          's': char * (if the string is NULL, print (nil) instead)
+ *          Any other char is ignored.
  */
 void print_all(const char * const format, ...)
 {
 	va_list vl;
 	char *string;
-	int i = 0;
-	bool separator = false;
+	int i;
 
 	va_start(vl, format);
-	while (format != NULL && format[i] != '\0')
+	for (i = 0; format != NULL && format[i] != '\0'; i++)
 	{
-		if (separator)
-			printf(", ");
-		separator = true;
-
-		if (format[i] == 'c')
+		switch (format[i])
 		{
-			printf("%c", va_arg(vl, int));
-		}
-		else if (format[i] == 'i')
-		{
-			printf("%d", va_arg(vl, int));
-		}
-		else if (format[i] == 'f')
-		{
-			printf("%f", (float) va_arg(vl, double));
-		}
-		else if (format[i] == 's')
-		{
-			string = va_arg(vl, char *);
-			if (string == NULL)
-			{
-				printf("(nil)");
-			}
-			else
-			{
+			case 'i':
+				printf("%i", va_arg(vl, int));
+				break;
+			case 'f':
+				printf("%f", va_arg(vl, double));
+				break;
+			case 'c':
+				printf("%c", (char) va_arg(vl, int));
+				break;
+			case 's':
+				string = va_arg(vl, char *);
+				if (string == NULL)
+				{
+					printf("(nil)");
+					break;
+				}
 				printf("%s", string);
-			}
+				break;
 		}
-		i++;
+		if ((format[i] == 'c' || format[i] == 'i' || format[i] == 'f' ||
+			format[i] == 's') && format[(i + 1)] != '\0')
+		{
+			printf(", ");
+		}
 	}
 	printf("\n");
 	va_end(vl);
