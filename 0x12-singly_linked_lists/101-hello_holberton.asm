@@ -1,14 +1,15 @@
 section .data
-    hello db 'Greetings from the Learning Realm!',0
-    format db '%s', 0
+    hello db "Hello, Holberton", 0
+    format db "%s", 10, 0   ; %s for string, 10 for newline, and null-terminator
 
 section .text
     global main
     extern printf
 
 main:
-    mov edi, hello        ; Load the address of the string to be printed
-    xor eax, eax          ; Clear eax register for return value
-    call printf           ; Call printf function
-    mov eax, 0            ; Set return value to 0
+    mov rdi, format   ; Format string
+    mov rsi, hello    ; Address of the string to be printed
+    xor rax, rax      ; Clear rax register
+    call printf       ; Call printf function
+    xor rax, rax      ; Set return value to 0
     ret
