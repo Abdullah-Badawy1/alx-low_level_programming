@@ -8,7 +8,9 @@
 size_t list_len(const list_t *h)
 {
 	const list_t *temp;
-	int counter = 0;
+
+
+	unsigned int counter = 0;
 
 
 
