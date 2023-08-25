@@ -10,13 +10,13 @@ size_t list_len(const list_t *h)
 	const list_t *temp;
 
 
-	unsigned int counter = 0;
+	int counter = 0;
 
 
 
 	for (temp = h; temp; temp = temp->next)
 	{
-		counter = couter + 1;
+		counter = counter + 1;
 	}
 
 	return (counter);
