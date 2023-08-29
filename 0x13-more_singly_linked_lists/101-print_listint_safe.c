@@ -1,87 +1,69 @@
 #include "lists.h"
-#include <stdio.h>
-
-size_t count_loop_nodes(const listint_t *head);
-size_t print_listint_safe(const listint_t *head);
 
 /**
- * count_loop_nodes - Counts the number of unique nodes
- *                    in a looped listint_t linked list.
- * @head: A pointer to the head of the listint_t to check.
+ * free_listp - Frees a linked list.
+ * @head: Pointer to the head of the list.
  *
- * Return: If the list is not looped - 0.
- *         Otherwise - the number of unique nodes in the list.
+ * Return: No return.
  */
-size_t count_loop_nodes(const listint_t *head)
+void free_listp(listp_t **head)
 {
-	const listint_t *tortoise, *hare;
-	size_t nodes = 1;
+	listp_t *temp;
+	listp_t *current;
 
-	if (head == NULL || head->next == NULL)
-		return (0);
-
-	tortoise = head->next;
-	hare = (head->next)->next;
-
-	while (hare)
+	if (head != NULL)
 	{
-		switch (tortoise == hare)
+		current = *head;
+		while ((temp = current) != NULL)
 		{
-			case 1:  /* Loop detected */
-				tortoise = head;
-				while (tortoise != hare)
-				{
-					nodes++;
-					tortoise = tortoise->next;
-					hare = hare->next;
-				}
-				tortoise = tortoise->next;
-				while (tortoise != hare)
-				{
-					nodes++;
-					tortoise = tortoise->next;
-				}
-				return nodes;
+			current = current->next;
+			free(temp);
 		}
-
-		tortoise = tortoise->next;
-		hare = (hare->next)->next;
+		*head = NULL;
 	}
-
-	return (0);
 }
 
 /**
- * print_listint_safe - Prints a listint_t list safely.
- * @head: A pointer to the head of the listint_t list.
+ * print_listint_safe - Prints a linked list safely.
+ * @head: Pointer to the head of the listint_t list.
  *
- * Return: The number of nodes in the list.
+ * Return: Number of nodes in the list.
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	size_t nodes, index = 0;
+	size_t node_count = 0;
+	listp_t *hptr, *new_node, *search_node;
 
-	nodes = count_loop_nodes(head);
-
-	if (nodes == 0)
+	hptr = NULL;
+	while (head != NULL)
 	{
-		while (head != NULL)
+		new_node = malloc(sizeof(listp_t));
+
+		if (new_node == NULL)
+			exit(98);
+
+		new_node->p = (void *)head;
+		new_node->next = hptr;
+		hptr = new_node;
+
+		search_node = hptr;
+
+		while (search_node->next != NULL)
 		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-			nodes++;
-		}
-	}
-	else
-	{
-		for (index = 0; index < nodes; index++)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
+			search_node = search_node->next;
+			if (head == search_node->p)
+			{
+				printf("-> [%p] %d\n", (void *)head, head->n);
+				free_listp(&hptr);
+				return (node_count);
+			}
 		}
 
-		printf("-> [%p] %d\n", (void *)head, head->n);
+		printf("[%p] %d\n", (void *)head, head->n);
+		head = head->next;
+		node_count++;
 	}
 
-	return (nodes);
+	free_listp(&hptr);
+	return (node_count);
 }
