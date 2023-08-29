@@ -1,41 +1,42 @@
 #include "lists.h"
 
 /**
- * free_listint_safe - Frees a listint_t linked list safely.
- * @h: Double pointer to the head of the listint_t linked list.
- *
- * Description: This function frees a list in a safe mode to avoid loops.
- *
- * Return: The number of nodes freed.
+ * free_listint_safe - Frees a list in safe mode.
+ * @h: Double pointer to the head of the list.
+ * Description: This function frees a list of listint_t nodes in a safe manner.
+ *              It detects loops and avoids double freeing.
+ * Section header: The header of this function is lists.h.
+ * Return: The size of the list.
  */
 size_t free_listint_safe(listint_t **h)
 {
 	listint_t *tmp, *current;
-	size_t nodes_freed;
-	int difference;
+	size_t nodes_freed = 0;
+	int offset;
 
-	nodes_freed = 0;
 	current = *h;
 
-	for (; current != NULL; nodes_freed++)
+	while (current)
 	{
-		difference = current - current->next;
+		offset = current - current->next;
 
-		switch (difference > 0)
+		if (offset > 0)
 		{
-			case 1:/* Non-looping node */
-				tmp = current->next;
-				free(current);
-				current = tmp;
-				break;
-
-			default:/* Looping node or last node */
-				free(current);
-				*h = NULL;
-				return (nodes_freed);
+			tmp = current->next;
+			free(current);
+			current = tmp;
+			nodes_freed++;
+		}
+		else
+		{
+			free(current);
+			*h = NULL;
+			nodes_freed++;
+			break;
 		}
 	}
 
 	*h = NULL;
+
 	return (nodes_freed);
 }
