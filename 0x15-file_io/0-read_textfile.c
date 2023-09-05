@@ -6,11 +6,13 @@
 #include <stdlib.h>
 
 /**
- * read_textfile - Reads a text file and prints it to the POSIX standard output.
+ * read_textfile - Reads a text file and
+ * prints it to the POSIX standard output.
  * @filename: Name of the file to read.
  * @letters: Number of letters it should read and print.
  *
- * Return: The actual number of letters it could read and print, or 0 on failure.
+ * Return: The actual number of letters
+ * it could read and print, or 0 on failure.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
@@ -38,7 +40,8 @@ ssize_t read_textfile(const char *filename, size_t letters)
 			free(text_buffer);
 			return (0);
 	}
-	bytes_written = write(STDOUT_FILENO, text_buffer, bytes_read);
+	bytes_written =
+	write(STDOUT_FILENO, text_buffer, bytes_read);
 	switch (bytes_written == -1 || bytes_written != bytes_read)
 	{
 		case 1:
