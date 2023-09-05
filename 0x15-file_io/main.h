@@ -19,13 +19,13 @@ int _putchar(char c);
 /**
  * read_textfile - Reads a text file and
  * prints it to the POSIX standard output.
- * @file_name: Name of the file to read.
- * @num_letters: Number of letters it should read and print.
+ * @filename: Name of the file to read.
+ * @letters: Number of letters it should read and print.
  *
  * Return: The actual number of letters
  * it could read and print, or 0 on failure.
  */
-ssize_t read_textfile(const char *file_name, size_t num_letters);
+ssize_t read_textfile(const char *filename, size_t letters);
 
 /**
  * create_file - Creates a file with a specific content.
