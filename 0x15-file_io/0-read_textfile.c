@@ -1,55 +1,39 @@
 #include "main.h"
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
 
 /**
- * read_textfile - Reads a text file and
- * prints it to the POSIX standard output.
- * @filename: Name of the file to read.
- * @letters: Number of letters it should read and print.
+ * read_textfile - Read a text file and print a specified number of characters
+ *                to the standard output.
  *
- * Return: The actual number of letters
- * it could read and print, or 0 on failure.
+ * @filename: The name of the file to open and read.
+ * @letters: The number of letters to print to the standard output.
+ *
+ * Return: The number of characters printed to the standard output on success,
+ *         or 0 on failure.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int file_descriptor;
-	ssize_t bytes_read, bytes_written;
-	char *text_buffer;
+	int fd, chars_read, chars_written;
+	char *buffer;
 
-	if (filename == NULL)
-		return (0)
-	file_descriptor = open(filename, O_RDONLY);
-	if (file_descriptor == -1)
-		return (0);
-	text_buffer = malloc(sizeof(char) * letters);
-	switch (text_buffer == NULL)
+	/* Check if filename is NULL */
+	(!filename) ? (0) : (fd = open(filename, O_RDONLY));
+	if (fd == -1)
+		return (0); /* Return 0 if opening the file fails */
+
+	/* Allocate memory for the buffer */
+	(!((buffer = malloc(sizeof(char) * letters)))) ? (0) : (0);
+	if (!buffer)
 	{
-		case 1:
-			close(file_descriptor);
-			return (0);
+		close(fd);
+		return (0); /* Return 0 if memory allocation fails */
 	}
-	bytes_read = read(file_descriptor, text_buffer, letters);
-	switch (bytes_read)
-	{
-		case -1:
-			close(file_descriptor);
-			free(text_buffer);
-			return (0);
-	}
-	bytes_written =
-	write(STDOUT_FILENO, text_buffer, bytes_read);
-	switch (bytes_written == -1 || bytes_written != bytes_read)
-	{
-		case 1:
-			close(file_descriptor);
-			free(text_buffer);
-			return (0);
-	}
-	close(file_descriptor);
-	free(text_buffer);
-	return (bytes_written);
+
+	((chars_read = read(fd, buffer, letters)) == -1) ? (free(buffer), 0) : (0);
+
+	/* Write to stdout */
+	((chars_written =
+	write(STDOUT_FILENO, buffer, chars_read)) == -1) ? (free(buffer), 0) : (0);
+	close(fd);
+	free(buffer);
+	return (chars_written);
 }
