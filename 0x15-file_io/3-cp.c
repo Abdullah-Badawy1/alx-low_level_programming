@@ -1,100 +1,62 @@
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
+#include "main.h"
 #include <stdio.h>
 
 /**
- * check97 - Checks number of arguments and exits if incorrect.
- * @argc: Number of arguments.
+ * check_file_error - Check and handle errors related to file operations.
+ * @file_descriptor: File descriptor to check.
+ * @filename: Name of the file being operated on.
+ * @mode: 'read' or 'write' mode for error message.
  */
-void check97(int argc)
+void check_file_error(int file_descriptor,
+		const char *filename, const char *mode)
 {
-	(argc != 3)
-		? (dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97))
-		: (void)0;
+	(file_descriptor == -1) ? (dprintf(STDERR_FILENO,
+		"Error: Can't %s from file %s\n", mode, filename), exit(98)) : (void)0;
 }
 
 /**
- * check98 - Checks if a file can be read.
- * @check: Result of a check.
- * @file: Name of the file.
- * @fd_from: File descriptor of file_from, or -1.
- * @fd_to: File descriptor of file_to, or -1.
- */
-void check98(ssize_t check, char *file, int fd_from, int fd_to)
-{
-	(check == -1)
-		? (dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file),
-		   (fd_from != -1) ? close(fd_from) : (void)0,
-		   (fd_to != -1) ? close(fd_to) : (void)0,
-		   exit(98))
-		: (void)0;
-}
-
-/**
- * check99 - Checks if a file can be written.
- * @check: Result of a check.
- * @file: Name of the file.
- * @fd_from: File descriptor of file_from, or -1.
- * @fd_to: File descriptor of file_to, or -1.
- */
-void check99(ssize_t check, char *file, int fd_from, int fd_to)
-{
-	(check == -1)
-		? (dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file),
-		   (fd_from != -1) ? close(fd_from) : (void)0,
-		   (fd_to != -1) ? close(fd_to) : (void)0,
-		   exit(99))
-		: (void)0;
-}
-
-/**
- * check100 - Checks if a file descriptor was closed properly.
- * @check: Result of a check.
- * @fd: File descriptor.
- */
-void check100(int check, int fd)
-{
-	(check == -1)
-		? (dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd), exit(100))
-		: (void)0;
-}
-
-/**
- * main - Copies the content of a file to another file.
- * @argc: Number of arguments.
- * @argv: Array of pointers to the arguments.
- *
- * Return: 0 on success.
+ * main - Entry point for the cp (copy) program.
+ * @argc: Number of command-line arguments.
+ * @argv: Array of command-line argument strings.
+ * Return: Always 0.
  */
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to, close_to, close_from;
-	ssize_t bytes_read, bytes_written;
+	int source_fd, target_fd, close_result;
+	ssize_t num_read, num_written;
 	char buffer[1024];
-	mode_t file_perm;
 
-	check97(argc);
-	fd_from = open(argv[1], O_RDONLY);
-	check98((ssize_t)fd_from, argv[1], -1, -1);
-	file_perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, file_perm);
-	check99((ssize_t)fd_to, argv[2], fd_from, -1);
-	bytes_read = 1024;
-	for (; bytes_read == 1024;)
+	switch (argc)
 	{
-		bytes_read = read(fd_from, buffer, 1024);
-		check98(bytes_read, argv[1], fd_from, fd_to);
-		bytes_written = write(fd_to, buffer, bytes_read);
-		(bytes_written != bytes_read) ? (bytes_written = -1) : (void)0;
-		check99(bytes_written, argv[2], fd_from, fd_to);
+		case 3:
+			break;
+		default:
+			dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+			exit(97);
 	}
-	close_to = close(fd_to);
-	close_from = close(fd_from);
-	check100(close_to, fd_to);
-	check100(close_from, fd_from);
+
+	source_fd = open(argv[1], O_RDONLY);
+	target_fd = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0664);
+	check_file_error(source_fd, argv[1], "read");
+	check_file_error(target_fd, argv[2], "write");
+
+	for (num_read = 1024; num_read == 1024;
+			num_read = read(source_fd, buffer, 1024))
+	{
+		check_file_error(num_read, argv[1], "read");
+
+		num_written = write(target_fd, buffer, num_read);
+		(num_written == -1) ? (check_file_error(num_written,
+					argv[2], "write"), (void)0) : (void)0;
+	}
+
+	close_result = close(source_fd);
+	(close_result == -1) ? (dprintf(STDERR_FILENO,
+		"Error: Can't close fd %d\n", source_fd), exit(100)) : (void)0;
+
+	close_result = close(target_fd);
+	(close_result == -1) ? (dprintf(STDERR_FILENO,
+		"Error: Can't close fd %d\n", target_fd), exit(100)) : (void)0;
+
 	return (0);
 }
-
