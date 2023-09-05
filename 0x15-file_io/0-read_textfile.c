@@ -1,39 +1,50 @@
 #include "main.h"
 
 /**
- * read_textfile - Read a text file and print a specified number of characters
- *                to the standard output.
+ * read_textfile - Reads a text file
+ * and prints a specified number of letters.
  *
  * @filename: The name of the file to open and read.
- * @letters: The number of letters to print to the standard output.
+ * @letters: The number of letters to print.
  *
- * Return: The number of characters printed to the standard output on success,
- *         or 0 on failure.
+ * Return: The number of letters printed on success, or 0 on failure.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fd, chars_read, chars_written;
+	int file_descriptor;
+	ssize_t num_letters_read, num_letters_written;
 	char *buffer;
 
-	/* Check if filename is NULL */
-	(!filename) ? (0) : (fd = open(filename, O_RDONLY));
-	if (fd == -1)
-		return (0); /* Return 0 if opening the file fails */
-
-	/* Allocate memory for the buffer */
-	(!((buffer = malloc(sizeof(char) * letters)))) ? (0) : (0);
-	if (!buffer)
+	switch (!filename)
 	{
-		close(fd);
-		return (0); /* Return 0 if memory allocation fails */
+		case 1:
+			return (0);
+		default:
+			file_descriptor = open(filename, O_RDONLY);
+			break;
 	}
 
-	((chars_read = read(fd, buffer, letters)) == -1) ? (free(buffer), 0) : (0);
+	switch (file_descriptor == -1)
+	{
+		case 1:
+			return (0);
+		default:
+			break;
+	}
 
-	/* Write to stdout */
-	((chars_written =
-	write(STDOUT_FILENO, buffer, chars_read)) == -1) ? (free(buffer), 0) : (0);
-	close(fd);
+	buffer = malloc(sizeof(char) * letters);
+	switch (!buffer)
+	{
+		case 1:
+			close(file_descriptor);
+			return (0);
+		default:
+			break;
+	}
+	num_letters_read = read(file_descriptor, buffer, letters);
+	num_letters_written = write(STDOUT_FILENO, buffer, num_letters_read);
+
+	close(file_descriptor);
 	free(buffer);
-	return (chars_written);
+	return (num_letters_written);
 }
