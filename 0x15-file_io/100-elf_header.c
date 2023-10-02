@@ -149,49 +149,27 @@ void displayOsAbi(unsigned char *e_ident)
 
 	/* Check the OS/ABI value */
 	if (e_ident[EI_OSABI] == ELFOSABI_NONE)
-	{
 		printf("UNIX - System V\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_HPUX)
-	{
 		printf("UNIX - HP-UX\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_NETBSD)
-	{
 		printf("UNIX - NetBSD\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_LINUX)
-	{
 		printf("UNIX - Linux\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_SOLARIS)
-	{
 		printf("UNIX - Solaris\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_IRIX)
-	{
 		printf("UNIX - IRIX\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_FREEBSD)
-	{
 		printf("UNIX - FreeBSD\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_TRU64)
-	{
 		printf("UNIX - TRU64\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_ARM)
-	{
 		printf("ARM\n");
-	}
 	else if (e_ident[EI_OSABI] == ELFOSABI_STANDALONE)
-	{
 		printf("Standalone App\n");
-	}
 	else
-	{
 		printf("<unknown: %x>\n", e_ident[EI_OSABI]);
-	}
 }
 
 /**
