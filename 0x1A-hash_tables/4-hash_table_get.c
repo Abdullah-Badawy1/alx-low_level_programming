@@ -3,7 +3,8 @@
 /**
  * hash_table_get - retrieves a value associated with a key
  *
- * Description: Retrieves the value associated with a given key in the hash table.
+ * Description: Retrieves the value
+ * associated with a given key in the hash table.
  *
  * @ht: hash table
  * @key: key to search for

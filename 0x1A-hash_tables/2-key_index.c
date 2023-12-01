@@ -4,7 +4,7 @@
  * key_index - function that gives you the index of a key
  *
  * Description: This function calculates the index where a key/value pair
- *              should be stored in the array of the hash table based on the key.
+ *should be stored in the array of the hash table based on the key.
  *
  * @key: the key
  * @size: the size of the array of the hash table
