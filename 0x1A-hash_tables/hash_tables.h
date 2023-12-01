@@ -6,15 +6,12 @@
 #include <string.h>
 
 /**
- * struct hash_node_s - Node of a hash table.
+ * struct hash_node_s - Node of a hash table
  *
- * @key: The key, a string. The key is unique within the HashTable.
- * @value: The value corresponding to a key.
- * @next: A pointer to the next node in the list, enabling chaining for collision handling.
- *
- * Description: This structure represents a single node in a hash table,
- * containing a key-value pair and a pointer to the next node, allowing
- * the implementation of chaining for collision resolution in the hash table.
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
  */
 typedef struct hash_node_s
 {
@@ -24,15 +21,12 @@ typedef struct hash_node_s
 } hash_node_t;
 
 /**
- * struct hash_table_s - Hash table data structure.
+ * struct hash_table_s - Hash table data structure
  *
- * @size: The size of the array in the hash table.
- * @array: An array of pointers, each pointing to the first node of a linked list.
- *         This implementation uses chaining for collision handling.
- *
- * Description: This structure represents the entire hash table, with an array
- * that holds pointers to the first node of linked lists (for each bucket in the table),
- * thus implementing a chaining collision handling mechanism.
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
  */
 typedef struct hash_table_s
 {
@@ -41,17 +35,14 @@ typedef struct hash_table_s
 } hash_table_t;
 
 /**
- * struct shash_node_s - Node of a sorted hash table.
+ * struct shash_node_s - Node of a sorted hash table
  *
- * @key: The key, a string. The key is unique within the HashTable.
- * @value: The value corresponding to a key.
- * @next: A pointer to the next node in the list for standard chaining.
- * @sprev: A pointer to the previous element in the sorted linked list.
- * @snext: A pointer to the next element in the sorted linked list.
- *
- * Description: This structure extends the basic hash node structure to
- * include pointers to previous and next nodes in a sorted order, facilitating
- * the maintenance of a sorted linked list in addition to the standard chaining.
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
+ * @sprev: A pointer to the previous element of the sorted linked list
+ * @snext: A pointer to the next element of the sorted linked list
  */
 typedef struct shash_node_s
 {
@@ -63,17 +54,14 @@ typedef struct shash_node_s
 } shash_node_t;
 
 /**
- * struct shash_table_s - Sorted hash table data structure.
+ * struct shash_table_s - Sorted hash table data structure
  *
- * @size: The size of the array in the hash table.
- * @array: An array of pointers, each pointing to the first node of a linked list.
- *         This implementation uses chaining for collision handling.
- * @shead: A pointer to the first element of the sorted linked list.
- * @stail: A pointer to the last element of the sorted linked list.
- *
- * Description: This structure represents a sorted hash table, extending the basic
- * hash table structure with pointers to the head and tail of a sorted linked list,
- * enabling the maintenance of order in addition to efficient hashing.
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
+ * @shead: A pointer to the first element of the sorted linked list
+ * @stail: A pointer to the last element of the sorted linked list
  */
 typedef struct shash_table_s
 {
@@ -83,7 +71,6 @@ typedef struct shash_table_s
 	shash_node_t *stail;
 } shash_table_t;
 
-// Function prototypes for operations on hash tables
 hash_table_t *hash_table_create(unsigned long int size);
 unsigned long int hash_djb2(const unsigned char *str);
 unsigned long int key_index(const unsigned char *key, unsigned long int size);
@@ -98,4 +85,4 @@ void shash_table_print(const shash_table_t *ht);
 void shash_table_print_rev(const shash_table_t *ht);
 void shash_table_delete(shash_table_t *ht);
 
-#endif // HASH_TABLE_H
+#endif
