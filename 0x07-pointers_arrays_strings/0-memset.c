@@ -1,7 +1,3 @@
-/*
- * File: 0-memset.c
- * Auth: not
- */
 #include "main.h"
 
 /**
@@ -12,12 +8,19 @@
 *@n: Number of bytes to fill.
 *Return: Returns the pointer to the updated target memory area.
 */
+
 char *_memset(char *s, char b, unsigned int n)
 {
-	for (unsigned int i = 0; i < n; n--)
-	{
-		s[i] = b;
-	}
+	unsigned int i = 0;
 
-	return (s);
+	while (i < n)
+	{
+		if (i % 10)
+			printf(" ");
+		if (!(i % 10) && i)
+			printf("\n");
+		s[i] = b;
+		i++;
+		return (s);
+	}
 }
